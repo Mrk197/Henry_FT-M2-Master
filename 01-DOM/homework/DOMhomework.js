@@ -17,9 +17,9 @@ document.querySelector('#createdBy').innerHTML = created + " Mirka";
 // 2) 'complete'    : debe setearse en false
 // Ayuda: usar 'this' en el constructor
 
-function ToDo (description) {
+function ToDo(description) {
   // Tu código acá:
-  this.discription = description;
+  this.description = description;
   this.complete = false;
 }
 
@@ -55,17 +55,26 @@ ToDo.prototype.completeToDo = function () {
 function buildToDo(todo, index) {
   // Tu código acá:
   var todoShell = document.createElement("div"); 
-  todoShell.className("toDoShell");
+  todoShell.className = "toDoShell" ;
 
   var toDoText = document.createElement("span");
   toDoText.innerHTML = todo.description;
-  toDoText.id(index);
+  //toDoText.id = index;
 
-  if (todo.complete === true) {
-    toDoText.className("completeText")
+  var toDoCheck = document.createElement("input");
+  toDoCheck.type = "checkbox";
+  toDoCheck.id = index;
+
+  if(todo.complete) {
+    //toDoText.className = "completeText";
+    toDoCheck.className = "completeText";
   }
 
+  todoShell.appendChild(toDoCheck);
   todoShell.appendChild(toDoText);
+  //console.log("todoShell", todoShell);
+  //toDoText.addEventListener("click", completeToDo);
+  toDoCheck.addEventListener("click", completeToDo);
 
   return todoShell;
 }
@@ -77,12 +86,13 @@ function buildToDo(todo, index) {
 
 function buildToDos(toDos) {
   // Tu código acá:
-  let i=0;
-  let toDo = toDos.map(function (obj) {
-    buildToDo(obj, i);
+  //console.log("toDos", toDos);
+  var toDo = toDos.map(function(todo, index) {
+    //console.log("obj", todo);
+    return buildToDo(todo, index);
     i++;
   });
-
+  //console.log("toDo", toDo);
   return toDo;
 }
 
@@ -98,7 +108,15 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
-
+  let toDoContainer = document.getElementById('toDoContainer');
+  //console.log("toDoContainer", toDoContainer);
+  toDoContainer.innerHTML = ""; 
+  var arrayToDos = buildToDos(toDoItems);
+  //console.log("arrayToDos", arrayToDos);
+  for (let i = 0; i < arrayToDos.length; i++) {
+    //console.log("element",arrayToDos[i]);
+    toDoContainer.appendChild(arrayToDos[i]);
+  }
 }
 
 
@@ -113,7 +131,13 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
-
+  var newToDo = new ToDo(toDoInput.value);
+  console.log("NewToDo", newToDo);
+  toDoItems.push(newToDo);
+  console.log("toDoItems", toDoItems);
+  console.log(toDoItems[0]);
+  document.getElementById('toDoInput').value = " ";
+  displayToDos();
 }
 
 // Agregar un 'Event Listener' para que cada vez que el botón 'AGREGAR' sea clickeado
@@ -122,7 +146,7 @@ function addToDo() {
 //   2) Agregarle un 'click' event listener, pasándole la función 'addToDo' como callback
 
 // Tu código acá:
-
+document.getElementById('addButton').addEventListener("click", addToDo);
 
 // La función completeToDo se va a ejecutar cuando queramos completar un todo
 // [NOTA: Algunas cuestiones a tener en cuenta
@@ -138,13 +162,15 @@ function addToDo() {
 
 function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
-  // const index = event.target.id;
+  const index = event.target.id;
   // Tu código acá:
-
+  toDoItems[index].completeToDo();
+  displayToDos();
 }
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen
 
+displayToDos();
 
 // **********************************************EXTRA CREDITOS:********************************************** //
 
