@@ -6,8 +6,9 @@ let toDoItems = [];
 // Usando querySelector seleccionar dicho span por su id ('createdBy') y luego usando innerHTML
 // agregar tu nombre al final del texto actual. Ej: 'Aplicación creada por Franco'
 // Tu código acá:
+let miNombre = " Mirka";
 let created = document.querySelector('#createdBy').innerHTML;
-document.querySelector('#createdBy').innerHTML = created + " Mirka";
+document.querySelector('#createdBy').innerHTML = created + miNombre;
 
 
 // Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
@@ -54,28 +55,37 @@ ToDo.prototype.completeToDo = function () {
 
 function buildToDo(todo, index) {
   // Tu código acá:
+  //1)
   var todoShell = document.createElement("div"); 
-  todoShell.className = "toDoShell" ;
-
+  //2)
+  //opción 1: todoShell.className = "toDoShell";
+  /*opción 2:*/ todoShell.setAttribute('class', 'toDoShell');
+  //3)
   var toDoText = document.createElement("span");
+  //4)
   toDoText.innerHTML = todo.description;
+  //5)
   //toDoText.id = index;
 
   var toDoCheck = document.createElement("input");
   toDoCheck.type = "checkbox";
   toDoCheck.id = index;
+  toDoCheck.className = "completeCheckbox";
 
+  //6)
   if(todo.complete) {
     //toDoText.className = "completeText";
-    toDoCheck.className = "completeText";
+    toDoCheck.checked = true;
   }
 
-  todoShell.appendChild(toDoCheck);
-  todoShell.appendChild(toDoText);
-  //console.log("todoShell", todoShell);
   //toDoText.addEventListener("click", completeToDo);
   toDoCheck.addEventListener("click", completeToDo);
 
+  todoShell.appendChild(toDoCheck);
+  //7)
+  todoShell.appendChild(toDoText);
+
+  //8)
   return todoShell;
 }
 
@@ -84,16 +94,13 @@ function buildToDo(todo, index) {
 // Utilizar el método map usando la función previamente creada ('buildToDo')
 // Devolver el nuevo array
 
-function buildToDos(toDos) {
+function buildToDos(toDos) {  //convierte arrayr de objetos (toDos) en array de elementos html (arrtoDo)
   // Tu código acá:
-  //console.log("toDos", toDos);
-  var toDo = toDos.map(function(todo, index) {
+  var arrtoDo = toDos.map(function(elemento, index) { //con map se puede accder al index del elemento
     //console.log("obj", todo);
-    return buildToDo(todo, index);
-    i++;
+    return buildToDo(elemento, index); //crea elemento div
   });
-  //console.log("toDo", toDo);
-  return toDo;
+  return arrtoDo;
 }
 
 
@@ -108,15 +115,16 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
+  //1)
   let toDoContainer = document.getElementById('toDoContainer');
-  //console.log("toDoContainer", toDoContainer);
+  //2)
   toDoContainer.innerHTML = ""; 
+  //3)
   var arrayToDos = buildToDos(toDoItems);
-  //console.log("arrayToDos", arrayToDos);
-  for (let i = 0; i < arrayToDos.length; i++) {
-    //console.log("element",arrayToDos[i]);
-    toDoContainer.appendChild(arrayToDos[i]);
-  }
+  //4)
+  arrayToDos.map(function(element) {
+    toDoContainer.appendChild(element);
+  });
 }
 
 
@@ -131,12 +139,14 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
-  var newToDo = new ToDo(toDoInput.value);
-  console.log("NewToDo", newToDo);
+  //1)
+  let value = document.getElementById('toDoInput').value;
+  var newToDo = new ToDo(value);
+  //2)
   toDoItems.push(newToDo);
-  console.log("toDoItems", toDoItems);
-  console.log(toDoItems[0]);
+  //3)
   document.getElementById('toDoInput').value = " ";
+  //4)
   displayToDos();
 }
 
@@ -164,7 +174,9 @@ function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
   const index = event.target.id;
   // Tu código acá:
+  //1)
   toDoItems[index].completeToDo();
+  //2)
   displayToDos();
 }
 
