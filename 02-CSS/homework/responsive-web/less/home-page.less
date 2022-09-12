@@ -25,6 +25,10 @@
       border-radius: 20px;
       height: 100%;
     }
+
+    img:hover{
+      transform: rotateY(150deg)
+    }
   }
 
   .musica-nueva {
@@ -58,6 +62,10 @@
       }
 
       .btn {
+        .button(@btn-bg-color; @porcelain);
+      }
+      .btn:hover{
+        .btn-hover(@ebony-clay; @river-bend);
       }
     }
 
@@ -69,6 +77,59 @@
         width: 100%;
         height: auto;
         border-radius: 10px;
+      }
+
+      img:hover{
+        transform: scale(2,2);
+      }
+    }
+  }
+
+  header img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    padding-top: 1%;
+  }
+}
+
+@media @phone {
+  .home{
+    header img {
+      border-radius: 10px;
+      padding: 1%;
+    }
+
+    .music-images{
+      flex-direction: column;
+
+      img {
+        width: 95%;
+      }
+
+      .tecnologia, .ondas{
+        visibility: hidden;
+        display: none;
+      }
+    }
+
+    .actual{
+      flex-direction: column-reverse;
+      margin-top: 50px;
+      padding: 1%;
+
+      .actual-img{
+        width: 99%;
+        margin: .5%;
+      }
+
+      .actual-text{
+        width: 98%;
+
+        .btn{
+          width: 100%;
+          margin: 1%;
+        }
       }
     }
   }
