@@ -1,5 +1,4 @@
-var traverseDomAndCollectElements = function(matchFunc, startEl) {
-  var resultSet = [];
+var traverseDomAndCollectElements = function(matchFunc, startEl, resultSet = []) {
 
   if (typeof startEl === "undefined") {
     startEl = document.body;
@@ -9,7 +8,21 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
   // usa matchFunc para identificar elementos que matchien
 
   // TU CÓDIGO AQUÍ
+  console.log("startEl", startEl);
+  if (matchFunc(startEl)) { //si el selector esta en el elemento 
+    resultSet.push(startEl); //se guarda el elemento 
+    console.log("resultSet.pusch", resultSet);   
+  }
   
+  if (startEl.children) { //ha más elementos hijos?
+    //recorrer cada nodo hijo
+    //console.log("startEl.children", startEl.children);
+    for (let elem of startEl.children) {
+      traverseDomAndCollectElements(matchFunc, elem, resultSet); //verificar selector 
+    }
+  }
+  console.log("resultSet", resultSet);
+  return resultSet;
 };
 
 // Detecta y devuelve el tipo de selector
@@ -46,7 +59,7 @@ var matchFunctionMaker = function(selector) {
    };
   } else if (selectorType === "class") {
     matchFunction = (HTMLelement) =>{
-      console.log("className",HTMLelement.className);
+      //console.log("className",HTMLelement.className);
       //array de clases que contiene el elemento 
       let classes =  HTMLelement.className.split(" ");
       return classes.includes(selector.substring(1));
@@ -68,6 +81,7 @@ var matchFunctionMaker = function(selector) {
 
 var $ = function(selector) {
   var elements;
+  //selectorMatchFunc ->> contiene la función a la que se le va ir pasando el elemento y si coonicide retorna tue 
   var selectorMatchFunc = matchFunctionMaker(selector);
   elements = traverseDomAndCollectElements(selectorMatchFunc);
   return elements;
