@@ -1,4 +1,5 @@
-var traverseDomAndCollectElements = function(matchFunc, startEl, resultSet = []) {
+var traverseDomAndCollectElements = function(matchFunc, startEl) {
+  var resultSet = [];
 
   if (typeof startEl === "undefined") {
     startEl = document.body;
@@ -9,19 +10,18 @@ var traverseDomAndCollectElements = function(matchFunc, startEl, resultSet = [])
 
   // TU CÓDIGO AQUÍ
   console.log("startEl", startEl);
-  if (matchFunc(startEl)) { //si el selector esta en el elemento 
-    resultSet.push(startEl); //se guarda el elemento 
-    console.log("resultSet.pusch", resultSet);   
-  }
+  //si el selector esta en el elemento 
+  if (matchFunc(startEl)) resultSet.push(startEl); //se guarda el elemento  
   
   if (startEl.children) { //ha más elementos hijos?
     //recorrer cada nodo hijo
     //console.log("startEl.children", startEl.children);
     for (let elem of startEl.children) {
-      traverseDomAndCollectElements(matchFunc, elem, resultSet); //verificar selector 
+      let result = traverseDomAndCollectElements(matchFunc, elem); //verificar selector 
+      resultSet = [...resultSet, ...result];
     }
   }
-  console.log("resultSet", resultSet);
+  //console.log("resultSet", resultSet);
   return resultSet;
 };
 
@@ -55,7 +55,8 @@ var matchFunctionMaker = function(selector) {
   var matchFunction;
   if (selectorType === "id") { 
    matchFunction = (HTMLelement) =>{
-    return (HTMLelement.id === selector.substring(1));
+    //return (HTMLelement.id === selector.substring(1));
+    return ("#" + HTMLelement.id === selector);
    };
   } else if (selectorType === "class") {
     matchFunction = (HTMLelement) =>{
@@ -64,17 +65,17 @@ var matchFunctionMaker = function(selector) {
       let classes =  HTMLelement.className.split(" ");
       return classes.includes(selector.substring(1));
     };
-  } else if (selectorType === "tag.class") {
-    matchFunction = (HTMLelement) =>{
-      let selectores = selector.split(".");
-      let classes =  HTMLelement.className.split(" ");
-      //si coincide el tag y la clase
-      return (HTMLelement.tagName.toLowerCase() === selectores[0]) && (classes.includes(selectores[1]));
-    };
   } else if (selectorType === "tag") {
     matchFunction = function (HTMLelement) {
       return HTMLelement.tagName && (HTMLelement.tagName.toLowerCase() === selector.toLowerCase());
-    };
+  }; 
+  } else if (selectorType === "tag.class") {
+      matchFunction = (HTMLelement) =>{
+        let [selectorTag, selectorClass]= selector.split(".");
+        let classes =  HTMLelement.className.split(" ");
+        //si coincide el tag y la clase  // recursión da como resultado una función que se ejecuta y da true o false
+        return (matchFunctionMaker(selectorTag)(HTMLelement) && matchFunctionMaker("." + selectorClass)(HTMLelement));
+  };
   }
   return matchFunction;
 };
