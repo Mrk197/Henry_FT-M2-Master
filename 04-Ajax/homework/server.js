@@ -84,6 +84,7 @@ app.put("/amigos/:id", (req, res) => {
 });
 
 app.delete("/amigos/:id", (req, res) => {
+  console.log("Amigo borrdo");
   amigos = amigos.filter(friend => friend.id != req.params.id);
   res.status(200).json(amigos);
 });
