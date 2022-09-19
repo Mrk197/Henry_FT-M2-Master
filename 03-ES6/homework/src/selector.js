@@ -13,15 +13,16 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
   //si el selector esta en el elemento 
   if (matchFunc(startEl)) resultSet.push(startEl); //se guarda el elemento  
   
-  if (startEl.children) { //ha más elementos hijos?
+  if (startEl.children) { //hay más elementos hijos?
     //recorrer cada nodo hijo
     //console.log("startEl.children", startEl.children);
     for (let elem of startEl.children) {
-      let result = traverseDomAndCollectElements(matchFunc, elem); //verificar selector 
+      let result = traverseDomAndCollectElements(matchFunc, elem); //verificar selector
+      console.log("result", result); 
       resultSet = [...resultSet, ...result];
     }
   }
-  //console.log("resultSet", resultSet);
+  console.log("resultSet", resultSet);
   return resultSet;
 };
 
@@ -40,6 +41,12 @@ var selectorTypeMatcher = function(selector) {
   else if(selector.includes(".")){
     return "tag.class";
   }
+  else if (selector.includes(">")) { //child combinator 
+    return "childs";
+  }
+  else if (selector.includes(" ")) {
+    return "descendents";
+  }
   else{
     return "tag";
   }
@@ -52,6 +59,7 @@ var selectorTypeMatcher = function(selector) {
 
 var matchFunctionMaker = function(selector) {
   var selectorType = selectorTypeMatcher(selector);
+  console.log("selectorType", selectorType);
   var matchFunction;
   if (selectorType === "id") { 
    matchFunction = (HTMLelement) =>{
@@ -68,14 +76,33 @@ var matchFunctionMaker = function(selector) {
   } else if (selectorType === "tag") {
     matchFunction = function (HTMLelement) {
       return HTMLelement.tagName && (HTMLelement.tagName.toLowerCase() === selector.toLowerCase());
-  }; 
+    }; 
   } else if (selectorType === "tag.class") {
       matchFunction = (HTMLelement) =>{
         let [selectorTag, selectorClass]= selector.split(".");
-        let classes =  HTMLelement.className.split(" ");
         //si coincide el tag y la clase  // recursión da como resultado una función que se ejecuta y da true o false
         return (matchFunctionMaker(selectorTag)(HTMLelement) && matchFunctionMaker("." + selectorClass)(HTMLelement));
-  };
+    };
+  }
+  else if (selectorType === "childs") {
+    matchFunction = function (HTMLelement) {
+      //console.log("split-selector ", selector.split(" ")[0]);
+      //console.log("parent ",HTMLelement.parentElement.tagName.toLowerCase());
+      const selectores = selector.split(" ");
+      return (HTMLelement.parentElement.tagName.toLowerCase() === selectores[0] && HTMLelement.tagName.toLowerCase() === selectores[2]);
+    }
+  }
+  else if (selectorType === "descendents") {
+    matchFunction = function (HTMLelement) {
+      const selectores = selector.split(" ");
+      //console.log("selectores ",selectores);
+      let padre = HTMLelement.parentElement;
+      if(padre.parentElement){
+        var padrePadre = padre.parentElement.tagName.toLowerCase();
+        //console.log("padrePadre ",padrePadre);
+      } 
+      return ((padre.tagName.toLowerCase() === selectores[0] || padrePadre === selectores[0]) && HTMLelement.tagName.toLowerCase() === selectores[1]);
+    }
   }
   return matchFunction;
 };
