@@ -1,4 +1,4 @@
-describe("selectorTypeMatcher", function() {
+xdescribe("selectorTypeMatcher", function() {
   it("debe retornar el tipo 'id' para un selector de id", function() {
     var type = selectorTypeMatcher('#pagetitle');
     expect(type).toEqual("id");
@@ -20,7 +20,7 @@ describe("selectorTypeMatcher", function() {
   });
 });
 
-describe("matchFunctionMaker", function() {
+xdescribe("matchFunctionMaker", function() {
 
   it("Debe retornar una funcion que matchie el ID que devuelve TRUE si el elemento matchea el ID", function() {
     var selector = "#price";
@@ -95,7 +95,7 @@ describe("matchFunctionMaker", function() {
 
 });
 
-describe("funcion de selector $ ", function() {
+xdescribe("funcion de selector $ ", function() {
   var elements;
 
   it("debe seleccionar un elemento por tag name (el root en este caso)", function() {
