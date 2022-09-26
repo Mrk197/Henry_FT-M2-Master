@@ -6,25 +6,25 @@ export default function Card(props) {
   const { max, min, name, img, onClose } = props;
 
   const MaxComponent = <div>
-    <p>Max</p>
-    <p>{max}</p>
+    <h6>Max</h6>
+    <p>{max}°</p>
   </div>
 
   const MinComponent = <div>
-    <p>Min</p>
-    <p>{min}</p>
+    <h6>Max</h6>
+    <p>{min}°</p>
   </div>
 
 
-  return <div>
-    <button onClick={onClose}>x</button>
+  return <div className='Card'>
+    <button onClick={onClose} className="cardX">x</button>
     <h4>{name}</h4>
-    <div>
-      <div>
+    <div className='cardTemperature'>
+      <div className='cardMaxMin'>
         {MinComponent}
         {MaxComponent}
       </div>
-      <div>
+      <div className='cardIMG'>
         <img src={`http://openweathermap.org/img/wn/${img}@2x.png`} alt={img} />
       </div>
     </div>

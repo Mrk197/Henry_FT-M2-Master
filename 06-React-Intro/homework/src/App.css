@@ -28,6 +28,42 @@
   color: #61dafb;
 }
 
+.Card{
+  border:solid 1px gray;
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardX{
+  align-self: flex-end;
+}
+
+.cardTemperature{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardMaxMin{
+  display: flex;
+  min-width: 60%;
+  justify-content: space-around;
+}
+
+.cardIMG{
+  min-width: 30%;
+}
+
+img{
+  max-width: 70%;
+}
+
+.Cards{
+  display: flex;
+  justify-content: space-around;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
