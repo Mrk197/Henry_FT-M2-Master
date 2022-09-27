@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Card from './components/Card.jsx';
-import Cards from './components/Cards.jsx';
-import SearchBar from './components/SearchBar.jsx';
+import Cards from './components/Cards/Cards.jsx';
+import SearchBar from './components/SearchBar/SearchBar.jsx';
+import Card from './components/Card/Card.jsx';
 import data, { Cairns } from './data.js';
 
 function App() {

@@ -1,0 +1,52 @@
+ .Card{
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(159, 156, 156, 0.8);
+    border-radius: 5px;
+  }
+
+  .Card:hover{
+    background-color: rgba(79, 129, 48, 0.536);
+  }
+  
+  .btnX{
+    align-self: flex-end;
+    background-color: rgb(193, 37, 37);
+    border: none;
+    padding: 1px 8px;
+    margin: 4px;
+    color: white;
+    font-size: large;
+    border-radius: 5px;
+  }
+
+  .btnX p {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+  }
+
+  .btnX:hover{
+    background-color: rgba(193, 37, 37, 0.7);
+  }
+  
+  .cardTemperature{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .cardMaxMin{
+    display: flex;
+    min-width: 60%;
+    justify-content: space-around;
+  }
+  
+  .cardIMG{
+    min-width: 30%;
+  }
+  
+  img{
+    max-width: 70%;
+  }

@@ -1,0 +1,25 @@
+.SearchBar{
+    border: 1px solid rgba(159, 156, 156, 0.8);
+    background-color: black;
+}
+
+.inputT{
+    margin: 4px;
+    padding: 5px;
+    border-radius: 5px;
+    color: rgb(12, 12, 12);
+}
+
+.inputBtn{
+    background-color: transparent;
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 4px;
+    border-style: inset;
+}
+
+.inputBtn:hover{
+    background-color: rgba(49, 51, 50, 0.732);
+}
