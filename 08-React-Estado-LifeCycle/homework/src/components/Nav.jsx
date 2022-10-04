@@ -7,7 +7,7 @@ function Nav({onSearch}) {
   return (
     <div>
       <div>
-        <Logo></Logo>
+        <img src={Logo} alt="Logo"></img>
         <h2>Henry - Weather App</h2>
       </div>
       <div>
