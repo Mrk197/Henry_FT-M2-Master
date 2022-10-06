@@ -1,3 +1,17 @@
-#logoHenry {
+#LogoHenry {
   margin-right: 20px;
+  border-radius: 20%;
+}
+
+.navbar-brand{
+  display: flex;
+  width: 50%;
+}
+
+.navbar{
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
