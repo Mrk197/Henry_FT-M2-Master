@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import { Routes, Route, useParams } from "react-router-dom"
+
 import './App.css';
 import Nav from '../components/Nav.jsx';
 import Cards from '../components/Cards.jsx';
-import About from '../components/About.jsx';
-import Ciudad from '../components/Ciudad.jsx';
 
 const apiKey = '4ae2636d8dfbdc3044bede63951a019b';
 
 function App() {
   const [cities, setCities] = useState([]);
-  const {ciudadId} = useParams(); //returns an object of key/value pairs of URL parameters //destructuring
-
   function onClose(id) {
     setCities(oldCities => oldCities.filter(c => c.id !== id));
   }
@@ -43,7 +39,6 @@ function App() {
   function onFilter(ciudadId) {
     let ciudad = cities.filter(c => c.id === parseInt(ciudadId));
     if(ciudad.length > 0) {
-        console.log("CIUDAD", ciudad);
         return ciudad[0];
     } else {
         return null;
@@ -52,22 +47,15 @@ function App() {
   return (
     <div className="App">
       <Nav onSearch={onSearch}/>
-      {/* Define all the routes */}
-      <Routes>
-          <Route path="/" element={<Cards cities={cities} onClose={onClose}/>}></Route>
-          <Route path="about" element={<About />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-          <Route
-            exact path='/ciudad/:ciudadId'
-            element={<Ciudad city={onFilter(ciudadId)}/>}
-          />
-      </Routes>
+      <div>
+        <Cards
+          cities={cities}
+          onClose={onClose}
+        />
+      </div>
+      <hr />
     </div>
   );
-}
-
-export const NotFound = () => {
-  return <div>This is a 404 page</div>
 }
 
 export default App;
