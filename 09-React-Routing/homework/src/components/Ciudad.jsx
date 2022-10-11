@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function Ciudad({onFilter}) {
-    const city = onFilter();
+export default function Ciudad({city}) {
+    console.log("city", city);
     return (
         <div className="ciudad">
                 <div className="container">
-                    <h2>{city.name}</h2>
+                    <h2>Nme{city.name}</h2>
                     <div className="info">
                         <div>Temperatura: {city.temp} ºC</div>
                         <div>Clima: {city.weather}</div>

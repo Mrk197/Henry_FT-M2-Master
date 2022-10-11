@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, useParams } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import './App.css';
 import Nav from '../components/Nav.jsx';
 import Cards from '../components/Cards.jsx';
@@ -10,7 +10,7 @@ const apiKey = '4ae2636d8dfbdc3044bede63951a019b';
 
 function App() {
   const [cities, setCities] = useState([]);
-  const {ciudadId} = useParams(); //returns an object of key/value pairs of URL parameters //destructuring
+  //const {ciudadId} = useParams(); //returns an object of key/value pairs of URL parameters //destructuring
 
   function onClose(id) {
     setCities(oldCities => oldCities.filter(c => c.id !== id));
@@ -42,13 +42,14 @@ function App() {
   }
   function onFilter(ciudadId) {
     let ciudad = cities.filter(c => c.id === parseInt(ciudadId));
+    console.log(ciudad);
     if(ciudad.length > 0) {
-        console.log("CIUDAD", ciudad);
         return ciudad[0];
     } else {
         return null;
     }
   }
+
   return (
     <div className="App">
       <Nav onSearch={onSearch}/>
@@ -59,7 +60,7 @@ function App() {
           <Route path="*" element={<NotFound />}></Route>
           <Route
             exact path='/ciudad/:ciudadId'
-            element={<Ciudad city={onFilter(ciudadId)}/>}
+            element={<Ciudad city={onFilter('1699805')}/>}
           />
       </Routes>
     </div>
