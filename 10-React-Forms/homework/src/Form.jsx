@@ -20,7 +20,7 @@ export default function  Form() {
   });
   setErrors(validate({
     ...input,
-    [e.target.name]: e.target.value
+    [e.target.name]: e.target.value,
   }));
  }
 
@@ -28,20 +28,23 @@ export default function  Form() {
       <div>
         <form>
           <div>
-            <label>Username:</label>
+            <label htmlFor='username'>Username:</label>
             {/*Conectado el estado con el input*/}
             <input type="text" name="username" value={input.username} onChange={handleInputChange} className={errors.username && 'danger'}/>
+            {/*Render Condicionado */}
             {errors.username && (
               <p className="danger">{errors.username}</p>
             )}
           </div>
           <div>
-            <label>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input type="password" name="password" value={input.password} onChange={handleInputChange} className={errors.password && 'danger'}/>
             {errors.password && (
               <p className="danger">{errors.password}</p>
             )}
           </div>
+
+          <input type="submit" disabled={Object.keys(errors).length !== 0 || (!input.password && !input.username)} />
         </form>
       </div>
   )
@@ -54,9 +57,13 @@ export function validate(input) { //se recibe obj input
   } else if (!/\S+@\S+\.\S+/.test(input.username)) {
     errors.username = 'Username is invalid';
   }
-  else if(!input.password){
+  //en la segunda mitad de esta funció chequeamos dos cosas: si el campo de password está vacío
+  //se le dirá al usuario que la contraseña es requerida.
+  if(!input.password){
     errors.password = 'Password is required';
   }
+  //por otra parte, cuando el user comience a escribir la contraseña se le pedirá que al menos
+  //contenga un número.
   else if(!/(?=.*[0-9])/.test(input.password)){
     errors.password = 'Password is invalid';
   }
