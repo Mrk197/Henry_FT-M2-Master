@@ -11,6 +11,9 @@ import counter from './reducers';
 //con cualquier estado inicial con el que queramos que
 //empiece el store (que en este caso es ninguno).
 const store = createStore(counter);
+store.subscribe(() =>{
+  console.log(store.getState());
+});
 
 // Aquí, envolvemos nuestro componente principal React dentro de las etiquetas del Provider,
 // que vienen del paquete react-redux.
@@ -18,7 +21,7 @@ const store = createStore(counter);
 // El componente Provider es donde "vive" el store.
 ReactDOM.render(
   <Provider store={store}>
-    <Counter />
+    <Counter store={store} />
   </Provider>,
   document.getElementById('root')
 );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { increment, decrement } from '../actions';
+import { increment, decrement } from '../actions'; 
 
 class Counter extends Component {
     // Extra Credit
@@ -18,7 +18,9 @@ class Counter extends Component {
         return (
             <p>
                 Clickeado: {this.props.count} veces
-                <button onClick={() => {/* Completar */ }}>
+                <button onClick={() => {
+                    store.dispatch(increment());
+                 }}>
                     + {/* Incremeta */}
                 </button>
                 <button onClick={() => {/* Completar */ }}>
