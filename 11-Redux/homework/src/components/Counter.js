@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { increment, decrement } from '../actions'; 
+import {useDispatch} from 'react-redux';
+
 
 class Counter extends Component {
+
     // Extra Credit
     incrementIfOdd = () => {
       //Implementar una función de incremento que sólo aumenta si el valor del contador es impar
@@ -18,13 +21,11 @@ class Counter extends Component {
         return (
             <p>
                 Clickeado: {this.props.count} veces
-                <button onClick={() => {
-                    store.dispatch(increment());
-                 }}>
-                    + {/* Incremeta */}
-                </button>
-                <button onClick={() => {/* Completar */ }}>
+                <button onClick={this.props.decrement}>
                     -  {/* Decrementa */}
+                </button>
+                <button onClick={this.props.increment}> {/*estas prop se obtienen de hacer el connect*/}
+                    + {/* Incremeta */}
                 </button>
                  {/* Si quieres hacer los extra credit puede descomentar las lineas de abajo */}
                 {/* <button onClick={this.incrementIfOdd}>

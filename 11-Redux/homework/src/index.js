@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
+//import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
 import Counter from './components/Counter';
 import counter from './reducers';
@@ -21,7 +22,7 @@ store.subscribe(() =>{
 // El componente Provider es donde "vive" el store.
 ReactDOM.render(
   <Provider store={store}>
-    <Counter store={store} />
+    <Counter/>
   </Provider>,
   document.getElementById('root')
 );
