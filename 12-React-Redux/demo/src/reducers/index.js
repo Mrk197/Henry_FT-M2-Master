@@ -30,8 +30,8 @@ export default (state = initialState, action) => {
     case 'RECEIVE_POST':
       return {
         ...state,
-        loading: false,
-        post: action.post,
+        loading: false, //como ya se recibio una respuesta, se cambia loading a false 
+        post: action.post, //data recibida (Obj)
       }
     default:
       return {...state}

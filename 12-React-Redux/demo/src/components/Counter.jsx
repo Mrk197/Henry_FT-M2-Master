@@ -34,6 +34,16 @@ const mapStateToProps = (state) => ({
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(actionsCreators, dispatch);
+
+  //segunda opción 
+//     return {
+//     increment: () => dispatch(increment()),
+//     decrement: () => dispatch(decrement()),
+//     reset: () => dispatch(reset()),
+//     fetchPost: (num) => dispatch(fetchPost(num))
+//   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+//export default connect(null, mapDispatchToProps)(Counter);  Despachar sólo acción

@@ -25,16 +25,16 @@ export function getPost() {
 export function receivePost(post) {
   return {
     type: 'RECEIVE_POST',
-    post
+    post  //objeto con el data obtenido del request
   }
 }
 
 export function fetchPost(valor) {
   return function (dispatch) {
-    dispatch(getPost());
+    dispatch(getPost()); //antes de hacer la petición cambia el loading a true
     axios.get(`https://jsonplaceholder.typicode.com/todos/${valor}`)
       .then(r => r.data)
-      .then(d => dispatch(receivePost(d)))
+      .then(d => dispatch(receivePost(d)))  //una vez recibida la data se ejecuta accion de recibida 
       .catch(e => console.log(e));
   }
 }
