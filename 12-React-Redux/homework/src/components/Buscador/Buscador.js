@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import './Buscador.css';
-//importando acciones 
-import {addMovieFavorite, getMovies} from "../../actions"
-import { Button } from "bootstrap";
+
+//importo las actions
+import { addMovieFavorite, getMovies } from "../../actions"
+
+
 
 export class Buscador extends Component {
   constructor(props) {
@@ -14,11 +16,11 @@ export class Buscador extends Component {
     };
   }
   handleChange(event) {
-    this.setState({ title: event.target.value });
+    this.setState({ title: event.target.value }); //camiba propiedad title del estado cuando se escribe
   }
   handleSubmit(event) {
     event.preventDefault();
-    this.props.getMovies(this.state.title);
+    this.props.getMovies(this.state.title) //envía acción 
   }
 
   render() {
@@ -40,14 +42,15 @@ export class Buscador extends Component {
           <button type="submit">BUSCAR</button>
         </form>
         <ul>
-         {/* Aqui tienes que escribir tu codigo para mostrar la lista de peliculas */}
-         {this.props.movies.map((movie) => {
-            return(
-              <li key={movie.indbID}>
-                <Link to={`/movie/${movie.indbID}`}>{movie.title}</Link>
-                <Button>Fav</Button>
-              </li>
-            )
+         {this.props.movies?.map(movie=>{ //mapea resultdo almacenado en la prop movies que contiene el resultado de state.moviesLoaded
+          return(
+            <li key={movie.imdbID}>
+              <Link to={`/movie/${movie.imdbID}`}>{movie.Title}</Link>
+              <button onClick={()=>this.props.addMovieFavorite({title: movie.Title, id: movie.imdbID})}>
+                Fav
+              </button> 
+            </li>
+          )
          })}
         </ul>
       </div>
@@ -57,13 +60,12 @@ export class Buscador extends Component {
 
 function mapStateToProps(state) {
   return {
-    movies: state.moviesLoaded  //si hay un cambio en esta propiedad, el componente se re renderiza 
+    movies: state.moviesLoaded //si hay un cambio en esta propiedad, el componente se re renderiza
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    //action creators 
     addMovieFavorite: movie => dispatch(addMovieFavorite(movie)),
     getMovies: title => dispatch(getMovies(title))
   };
