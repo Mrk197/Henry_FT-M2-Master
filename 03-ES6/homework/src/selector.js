@@ -30,26 +30,14 @@ var traverseDomAndCollectElements = function(matchFunc, startEl) {
 // devuelve uno de estos tipos: id, class, tag.class, tag
 
 
-var selectorTypeMatcher = function(selector) {
+var selectorTypeMatcher = (selector) => {
   // tu código aquí
-  if(selector.startsWith("#")){
-    return "id";
-  }
-  else if(selector.startsWith(".")){
-    return "class";
-  }
-  else if(selector.includes(".")){
-    return "tag.class";
-  }
-  else if (selector.includes(">")) { //child combinator 
-    return "childs";
-  }
-  else if (selector.includes(" ")) {
-    return "descendents";
-  }
-  else{
-    return "tag";
-  }
+  if(selector.startsWith("#")) return "id";
+  else if(selector.startsWith(".")) return "class";
+  else if(selector.includes(".")) return "tag.class";
+  else if (selector.includes(">")) return "childs"; //child combinator 
+  else if (selector.includes(" ")) return "descendents";
+  else return "tag";
 };
 
 // NOTA SOBRE LA FUNCIÓN MATCH
@@ -57,43 +45,37 @@ var selectorTypeMatcher = function(selector) {
 // parametro y devuelve true/false dependiendo si el elemento
 // matchea el selector.
 
-var matchFunctionMaker = function(selector) {
+var matchFunctionMaker = (selector) => {
   var selectorType = selectorTypeMatcher(selector);
   console.log("selectorType", selectorType);
   var matchFunction;
+
   if (selectorType === "id") { 
-   matchFunction = (HTMLelement) =>{
+    matchFunction = (HTMLelement) => ("#" + HTMLelement.id === selector);
     //return (HTMLelement.id === selector.substring(1));
-    return ("#" + HTMLelement.id === selector);
-   };
   } else if (selectorType === "class") {
     matchFunction = (HTMLelement) =>{
-      //console.log("className",HTMLelement.className);
       //array de clases que contiene el elemento 
       let classes =  HTMLelement.className.split(" ");
       return classes.includes(selector.substring(1));
     };
   } else if (selectorType === "tag") {
-    matchFunction = function (HTMLelement) {
-      return HTMLelement.tagName && (HTMLelement.tagName.toLowerCase() === selector.toLowerCase());
-    }; 
+      matchFunction = (HTMLelement) => HTMLelement.tagName && (HTMLelement.tagName.toLowerCase() === selector.toLowerCase());
   } else if (selectorType === "tag.class") {
-      matchFunction = (HTMLelement) =>{
+      matchFunction = (HTMLelement) => {
         let [selectorTag, selectorClass]= selector.split(".");
         //si coincide el tag y la clase  // recursión da como resultado una función que se ejecuta y da true o false
         return (matchFunctionMaker(selectorTag)(HTMLelement) && matchFunctionMaker("." + selectorClass)(HTMLelement));
     };
   }
   else if (selectorType === "childs") {
-    matchFunction = function (HTMLelement) {
-      //console.log("split-selector ", selector.split(" ")[0]);
-      //console.log("parent ",HTMLelement.parentElement.tagName.toLowerCase());
+    matchFunction = (HTMLelement) => {
       const selectores = selector.split(" ");
       return (HTMLelement.parentElement.tagName.toLowerCase() === selectores[0] && HTMLelement.tagName.toLowerCase() === selectores[2]);
     }
   }
   else if (selectorType === "descendents") {
-    matchFunction = function (HTMLelement) {
+    matchFunction = (HTMLelement) => {
       const selectores = selector.split(" ");
       //console.log("selectores ",selectores);
       let padre = HTMLelement.parentElement;
